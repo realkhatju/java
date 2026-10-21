@@ -4,6 +4,14 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Compiled output ###
+*.class
+hs_err_pid*
+replay_pid*
+
+### Logs ###
+*.log
+
 ### STS ###
 .apt_generated
 .classpath
@@ -38,3 +46,4 @@ build/
 ### Project ###
 data/
 .env
+*.local
