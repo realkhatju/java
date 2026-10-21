@@ -1,0 +1,41 @@
+services:
+  postgres:
+    profiles: ["postgres"]
+    image: postgres:16-alpine
+    container_name: product-api-postgres
+    environment:
+      POSTGRES_DB: productdb
+      POSTGRES_USER: product
+      POSTGRES_PASSWORD: product
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U product -d productdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mysql:
+    profiles: ["mysql"]
+    image: mysql:8.4
+    container_name: product-api-mysql
+    environment:
+      MYSQL_DATABASE: productdb
+      MYSQL_USER: product
+      MYSQL_PASSWORD: product
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "product", "-pproduct"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  postgres_data:
+  mysql_data:
